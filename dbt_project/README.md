@@ -18,6 +18,4 @@ Try running the following commands:
 
 We've created two dbt models: example (which contains the default dbt example from jaffle-shop) and  ecommerce, which uses data from the dataset extracted via airbyte using the Faker source.
 
-This project is being orchestrated via Apache Airflow using the [Astronomer Cosmos](https://astronomer.github.io/astronomer-cosmos/) project. For more details in orchestrating dbt models with Airflow, you can check the `orchestration` folder in this quickstart.
-
-The ecommerce dbt model was forked and updated from the [Ecommerce Analytics Bigquery Quickstart](https://github.com/airbytehq/quickstarts/tree/main/ecommerce_analytics_bigquery).
+This project is being orchestrated via Apache Airflow. For more details in orchestrating dbt models with Airflow, you can check the `orchestration` folder in this quickstart.

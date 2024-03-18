@@ -4,7 +4,11 @@ from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperat
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 from airflow.operators.bash import BashOperator
+from airflow.models import Variable
 # Define the ELT DAG
+
+dbt_dir = Variable.get("dbt_base_dir")
+
 @dag(
     dag_id="elt_dag",
     start_date=datetime(2023, 10, 1),
@@ -20,7 +24,7 @@ def extract_and_transform():
     extract_data = AirbyteTriggerSyncOperator(
         task_id="trigger_airbyte_faker_to_teradata",
         airbyte_conn_id="airbyte_connection",
-        connection_id="862630d4-a07a-4c4d-b868-6ea7eda67f54", # Update with your Airbyte connection ID
+        connection_id="#######", # Update with your Airbyte connection ID
         asynchronous=False,
         timeout=3600,
         wait_seconds=3
@@ -33,14 +37,10 @@ def extract_and_transform():
         wait_for_completion=True,
         poke_interval=30,
     )
-    
-    render_dbt_docs = BashOperator(
-        task_id="render_dbt_docs",
-        bash_command="dbt docs generate"
-    )
+
 
     # Set the order of tasks
-    extract_data >> trigger_dbt_dag >> render_dbt_docs
+    extract_data >> trigger_dbt_dag
 
 # Instantiate the ELT DAG
 extract_and_transform_dag = extract_and_transform()
@@ -56,7 +56,7 @@ def transform():
 
     transform_data = BashOperator(
         task_id="transform_data",
-        bash_command="dbt run -s path:models/ecommerce"
+        bash_command="dbt run --profiles-dir {{ dbt_dir }} --project-dir {{ dbt_dir }} -s path:models/ecommerce"
     )
     
     transform_data
