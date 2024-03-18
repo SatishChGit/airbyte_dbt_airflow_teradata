@@ -110,10 +110,10 @@ That’s it! Your connection is set up and ready to go! 🎉
 
    - You'll find a `profiles.yml` file within the directory. This file contains configurations for dbt to connect with your data platform. Update this file with your Teradata connection details. 
    - Provide below details
-	- host: Teradata Instance host name
-	- schema: database name. Provide this database name in the `database` field of the `/models/ecommerce/sources/faker_sources.yml` file.
-	- user: database user.
-	- password: database password.
+     - **host**: Teradata Instance host name
+     - **schema**: database name. Provide this database name in the `database` field of the `/models/ecommerce/sources/faker_sources.yml` file.
+     - **user**: database user.
+     - **password**: database password.
 
 3. **Test the Connection (Optional)**:
    You can test the connection to your Teadata instance using the following command. Just take into account that you would need to provide the local path to your service account key file instead.
